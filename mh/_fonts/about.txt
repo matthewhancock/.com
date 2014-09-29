@@ -1,0 +1,3 @@
+﻿This app uses web fonts from Hoefler & Co. (http://typography.com)
+
+The font files have been excluded.

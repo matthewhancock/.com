@@ -1,0 +1,10 @@
+﻿{
+    "compilationOptions": { "languageVersion": "experimental" },
+    "dependencies": {
+        "Microsoft.AspNet.Server.IIS": "1.0.0-alpha3"
+    },
+    "frameworks": {
+        "net453": { },
+        "k10": { }
+    }
+}
