@@ -26,9 +26,8 @@ namespace mh
 
             if (path != null && path.StartsWith("css"))
             {
-                int maxAge = (DateTime.Now.AddYears(1) - DateTime.Now).Seconds;
-                string[] cacheControl = { "public", "max-age=" + maxAge };
-                context.Response.Headers.Add("cache-control", cacheControl);
+                string[] cacheControl = { "public", "max-age=31557600" }; // 365.25 * 24 * 60 * 60 - one year in seconds
+                context.Response.Headers.Add("Cache-Control", cacheControl);
                 context.Response.ContentType = "text/css";
 
                 if (_css == null)
@@ -53,9 +52,8 @@ namespace mh
                 }
                 if (file != null)
                 {
-                    int maxAge = (DateTime.Now.AddYears(1) - DateTime.Now).Seconds;
-                    string[] cacheControl = { "public", "max-age=" + maxAge };
-                    context.Response.Headers.Add("cache-control", cacheControl);
+                    string[] cacheControl = { "public", "max-age=31557600" }; // 365.25 * 24 * 60 * 60 - one year in seconds
+                    context.Response.Headers.Add("Cache-Control", cacheControl);
                     if (path.EndsWith(".css"))
                     {
                         context.Response.ContentType = "text/css";
@@ -85,9 +83,8 @@ namespace mh
                 }
                 if (file != null)
                 {
-                    int maxAge = (DateTime.Now.AddYears(1) - DateTime.Now).Seconds;
-                    string[] cacheControl = { "public", "max-age=" + maxAge };
-                    context.Response.Headers.Add("cache-control", cacheControl);
+                    string[] cacheControl = { "public", "max-age=31557600" }; // 365.25 * 24 * 60 * 60 - one year in seconds
+                    context.Response.Headers.Add("Cache-Control", cacheControl);
                     if (path.EndsWith(".jpg"))
                     {
                         context.Response.ContentType = "image/jpeg";
