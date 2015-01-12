@@ -13,52 +13,61 @@ namespace mh.Util
     {
         public static class Head
         {
-            public class Tag(string TagName, IDictionary<string, string> Attributes)
+            public class Tag
             {
-                private string _tag = TagName;
-                private IDictionary<string, string> _attributes = Attributes;
-                public virtual string Output()
+                public Tag(string TagName, IDictionary<string, string> Attributes)
                 {
+                    _tag = TagName;
+                    _attributes = Attributes;
+                }
+            private string _tag;
+            private IDictionary<string, string> _attributes;
+            public virtual string Output()
+            {
                     var s = "<" + _tag + " ";
                     foreach (var i in _attributes)
                     {
                         s += i.Key + "=\"" + i.Value + "\" ";
                     }
                     return s + "/>";
-                }
-                public class Javascript(string Url) : Tag("script", null)
-                {
-                    private string _url = Url;
-                    public override string Output()
+            }
+            public class Javascript : Tag
+            {
+                public Javascript(string Url) : base("script", null)
                     {
-                        return "<script src=\"" + _url + "\" async></script>";
+                        _url = Url;
                     }
-                }
-            }
-        }
-        public static async Task WriteOutput(HttpResponse Response, string Title, Head.Tag[] HeadTags, string Body)
-        {
-            var sb = new StringBuilder();
-            sb.Append("<!DOCTYPE html><head><meta charset=\"utf-8\">");
-            if (Title != null)
-            {
-                sb.Append("<title>" + Title + "</title>");
-            }
-            if (HeadTags != null)
-            {
-                foreach (var a in HeadTags)
+                private string _url;
+                public override string Output()
                 {
-                    sb.Append(a.Output());
+                            return "<script src=\"" + _url + "\" async></script>";
                 }
-            }
-            sb.Append("</head><body>");
-            sb.Append(Body);
-            sb.Append("</body></html>");
-            await Response.WriteAsync(sb.ToString());
         }
-        public static async Task WriteOutput(HttpResponse Response, string Title, string Body)
+    }
+}
+public static async Task WriteOutput(HttpResponse Response, string Title, Head.Tag[] HeadTags, string Body)
+{
+    var sb = new StringBuilder();
+    sb.Append("<!DOCTYPE html><head><meta charset=\"utf-8\">");
+    if (Title != null)
+    {
+        sb.Append("<title>" + Title + "</title>");
+    }
+    if (HeadTags != null)
+    {
+        foreach (var a in HeadTags)
         {
-            await WriteOutput(Response, Title, null, Body);
+            sb.Append(a.Output());
         }
+    }
+    sb.Append("</head><body>");
+    sb.Append(Body);
+    sb.Append("</body></html>");
+    await Response.WriteAsync(sb.ToString());
+}
+public static async Task WriteOutput(HttpResponse Response, string Title, string Body)
+{
+    await WriteOutput(Response, Title, null, Body);
+}
     }
 }

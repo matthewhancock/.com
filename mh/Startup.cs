@@ -11,7 +11,7 @@ namespace mh
 {
     public class Startup
     {
-        public void Configure(IBuilder app)
+        public void Configure(IApplicationBuilder app)
         {
             app.Run(ProcessRequestAsync);
         }
@@ -35,7 +35,8 @@ namespace mh
                     _css = await Util.File.LoadToString("_css/this.css");
                 }
                 await context.Response.WriteAsync(_css);
-            } else if (path != null && path.StartsWith("fonts/"))
+            }
+            else if (path != null && path.StartsWith("fonts/"))
             {
                 byte[] file = null;
                 if (_fonts.ContainsKey(path))
@@ -48,7 +49,8 @@ namespace mh
                     {
                         file = await Util.File.LoadToBuffer("_" + path);
                         _fonts.Add(path, file);
-                    } catch { }
+                    }
+                    catch { }
                 }
                 if (file != null)
                 {
@@ -57,7 +59,8 @@ namespace mh
                     if (path.EndsWith(".css"))
                     {
                         context.Response.ContentType = "text/css";
-                    } else if (path.EndsWith(".eot"))
+                    }
+                    else if (path.EndsWith(".eot"))
                     {
                         context.Response.ContentType = "application/vnd.ms-fontobject";
                     }
@@ -68,18 +71,22 @@ namespace mh
                     context.Response.StatusCode = 404;
                     await context.Response.WriteAsync("File Not Found");
                 }
-            } else if (path !=null && path.StartsWith("images/")) {
+            }
+            else if (path != null && path.StartsWith("images/"))
+            {
                 byte[] file = null;
                 if (_images.ContainsKey(path))
                 {
                     file = _images[path];
-                } else
+                }
+                else
                 {
                     try
                     {
                         file = await Util.File.LoadToBuffer("_" + path);
                         _images.Add(path, file);
-                    } catch { }
+                    }
+                    catch { }
                 }
                 if (file != null)
                 {
@@ -90,12 +97,15 @@ namespace mh
                         context.Response.ContentType = "image/jpeg";
                     }
                     await context.Response.Body.WriteAsync(file, 0, file.Length);
-                } else
+                }
+                else
                 {
                     context.Response.StatusCode = 404;
                     await context.Response.WriteAsync("File Not Found");
                 }
-            } else {
+            }
+            else
+            {
                 context.Response.ContentType = "text/html";
                 Blog b = null;
                 if (path != null)
@@ -132,6 +142,7 @@ namespace mh
                 }
                 else
                 {
+                    tags.Add(new Tag("meta", new Dictionary<string, string> { { "name", "description" }, { "content", "Matthew Hancock" } }));
                     body.Append("<h1 class=\"gray tac\">Matthew Hancock</h1>");
                     body.Append("<div class=\"tac\"><a class=\"twitter-timeline tac\" href=\"https://twitter.com/matthewhancock\" data-widget-id=\"296551452850135041\">Tweets by @matthewhancock</a></div>");
                     var p = Blogs;
@@ -157,14 +168,14 @@ namespace mh
 
         public class Blog
         {
-            public string Title { get;set; }
+            public string Title { get; set; }
             public string Content { get; set; }
             public string Author { get; set; }
             public string AuthorUserID { get; set; }
             public string PostID { get; set; }
             public string RoleTitle { get; set; }
-            public DateTime DateAdded { get;set; }
-            public DateTime DateEdited { get;set; }
+            public DateTime DateAdded { get; set; }
+            public DateTime DateEdited { get; set; }
             public string URLPath { get; set; }
 
             public Blog() { }

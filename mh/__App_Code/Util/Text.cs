@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace mh.Util
 {
@@ -9,7 +10,7 @@ namespace mh.Util
     {
         internal static string StripHtml(string HtmlString)
         {
-            return System.Text.RegularExpressions.Regex.Replace(HtmlString, "<(.|\n)*?>", String.Empty).Replace("&nbsp;", " ");
+            return Regex.Replace(HtmlString, "<(.|\n)*?>", String.Empty).Replace("&nbsp;", " ");
         }
     }
 }
