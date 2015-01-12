@@ -16,9 +16,9 @@ namespace mh
             app.Run(ProcessRequestAsync);
         }
 
-        private string _css = null;
-        private Dictionary<string, byte[]> _images = new Dictionary<string, byte[]>();
-        private Dictionary<string, byte[]> _fonts = new Dictionary<string, byte[]>();
+        private static string _css = null;
+        private static Dictionary<string, byte[]> _images = new Dictionary<string, byte[]>();
+        private static Dictionary<string, byte[]> _fonts = new Dictionary<string, byte[]>();
         private async Task ProcessRequestAsync(HttpContext context)
         {
             var path = context.Request.Path.ToString();
